@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DAL.Entities
+namespace GoriAPI.Models
 {
-    public class Position
+    public class PositionModel
     {
-        [Key]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
@@ -16,8 +16,5 @@ namespace DAL.Entities
         public decimal RetailPrice { get; set; }
         public decimal PositionVolume { get; set; }
         public int PositionCategoryId { get; set; }
-        public PositionCategory PositionCategory { get; set; }
-        public List<PositionIngredients> PositionIngredients { get; set; }
-        public List<Sales> Sales { get; set; }
     }
 }

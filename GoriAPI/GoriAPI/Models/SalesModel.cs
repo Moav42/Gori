@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DAL.Entities
+namespace GoriAPI.Models
 {
-    public class Sales
+    public class SalesModel
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -18,8 +18,7 @@ namespace DAL.Entities
 
         public int Customer { get; set; }
         public decimal TotalPrice { get; set; }
-        public bool Paid { get; set; }      
+        public bool Paid { get; set; }
         public DateTime TimeOfSale { get; set; }
-        public Position Position { get; set; }
     }
 }

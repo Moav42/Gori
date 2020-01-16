@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DAL.Entities
+namespace GoriAPI.Models
 {
-    public class Income
+    public class DrinkCategoryModel
     {
-        [Key]
         public int Id { get; set; }
         [Required]
-        public decimal Amount { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
     }
 }
