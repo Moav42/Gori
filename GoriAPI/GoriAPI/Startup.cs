@@ -35,6 +35,11 @@ namespace GoriAPI
 
             services.AddRepositories();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
+            });
+
             services.AddAutoMapper(c => c.AddProfile<MapingProfiles>(), typeof(Startup));
 
             services.AddSwaggerGen(c =>
@@ -57,7 +62,13 @@ namespace GoriAPI
                 app.UseDeveloperExceptionPage();
             }
 
-           // app.UseCustomExceptionMiddleware();
+            // app.UseCustomExceptionMiddleware();
+
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
+
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
 

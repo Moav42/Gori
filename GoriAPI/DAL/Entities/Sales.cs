@@ -8,7 +8,7 @@ namespace DAL.Entities
     public class Sales
     {
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public int PositionId { get; set; }
