@@ -83,6 +83,6 @@ namespace GoriAPI.Controllers
                 return BadRequest();
             }
         }
-      
+       
     }
 }

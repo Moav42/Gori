@@ -3,10 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.EF.Migrations
 {
-    public partial class Initial : Migration
+    public partial class SetUpOnWork : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Cashbox",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cash = table.Column<decimal>(nullable: false),
+                    Card = table.Column<decimal>(nullable: false),
+                    Total = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cashbox", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "DrinkCategories",
                 columns: table => new
@@ -25,7 +40,7 @@ namespace DAL.EF.Migrations
                 name: "Expenses",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Amount = table.Column<decimal>(nullable: false),
                     Description = table.Column<string>(nullable: true),
@@ -40,7 +55,7 @@ namespace DAL.EF.Migrations
                 name: "Incomes",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Amount = table.Column<decimal>(nullable: false),
                     Description = table.Column<string>(nullable: true),
@@ -66,21 +81,6 @@ namespace DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Сashbox",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Cash = table.Column<decimal>(nullable: false),
-                    Card = table.Column<decimal>(nullable: false),
-                    Total = table.Column<decimal>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Сashbox", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Drinks",
                 columns: table => new
                 {
@@ -89,7 +89,7 @@ namespace DAL.EF.Migrations
                     Name = table.Column<string>(nullable: false),
                     PriceLiter = table.Column<decimal>(nullable: false),
                     ActualVolume = table.Column<decimal>(nullable: false),
-                    DrinkCategoryId = table.Column<int>(nullable: true)
+                    DrinkCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,7 +99,7 @@ namespace DAL.EF.Migrations
                         column: x => x.DrinkCategoryId,
                         principalTable: "DrinkCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +113,7 @@ namespace DAL.EF.Migrations
                     RawPrice = table.Column<decimal>(nullable: false),
                     RetailPrice = table.Column<decimal>(nullable: false),
                     PositionVolume = table.Column<decimal>(nullable: false),
-                    PositionCategoryId = table.Column<int>(nullable: true)
+                    PositionCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,7 +123,7 @@ namespace DAL.EF.Migrations
                         column: x => x.PositionCategoryId,
                         principalTable: "PositionCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,7 +155,7 @@ namespace DAL.EF.Migrations
                 name: "Sales",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PositionId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
@@ -199,6 +199,9 @@ namespace DAL.EF.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Cashbox");
+
+            migrationBuilder.DropTable(
                 name: "Expenses");
 
             migrationBuilder.DropTable(
@@ -209,9 +212,6 @@ namespace DAL.EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sales");
-
-            migrationBuilder.DropTable(
-                name: "Сashbox");
 
             migrationBuilder.DropTable(
                 name: "Drinks");

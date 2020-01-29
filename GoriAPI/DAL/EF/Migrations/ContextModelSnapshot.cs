@@ -19,6 +19,27 @@ namespace DAL.EF.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DAL.Entities.Cashbox", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Card")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Cash")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cashbox");
+                });
+
             modelBuilder.Entity("DAL.Entities.Drink", b =>
                 {
                     b.Property<int>("Id")
@@ -29,7 +50,7 @@ namespace DAL.EF.Migrations
                     b.Property<decimal>("ActualVolume")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("DrinkCategoryId")
+                    b.Property<int>("DrinkCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -67,9 +88,9 @@ namespace DAL.EF.Migrations
 
             modelBuilder.Entity("DAL.Entities.Expense", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
@@ -88,9 +109,9 @@ namespace DAL.EF.Migrations
 
             modelBuilder.Entity("DAL.Entities.Income", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
@@ -121,7 +142,7 @@ namespace DAL.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PositionCategoryId")
+                    b.Property<int>("PositionCategoryId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("PositionVolume")
@@ -179,9 +200,9 @@ namespace DAL.EF.Migrations
 
             modelBuilder.Entity("DAL.Entities.Sales", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Customer")
@@ -209,39 +230,22 @@ namespace DAL.EF.Migrations
                     b.ToTable("Sales");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Сashbox", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Card")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Cash")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Сashbox");
-                });
-
             modelBuilder.Entity("DAL.Entities.Drink", b =>
                 {
                     b.HasOne("DAL.Entities.DrinkCategory", "DrinkCategory")
                         .WithMany("Drinks")
-                        .HasForeignKey("DrinkCategoryId");
+                        .HasForeignKey("DrinkCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Entities.Position", b =>
                 {
                     b.HasOne("DAL.Entities.PositionCategory", "PositionCategory")
                         .WithMany("Position")
-                        .HasForeignKey("PositionCategoryId");
+                        .HasForeignKey("PositionCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Entities.PositionIngredients", b =>

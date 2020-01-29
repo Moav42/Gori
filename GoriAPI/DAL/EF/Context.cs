@@ -28,7 +28,13 @@ namespace DAL.EF
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            //string connectionString = "Data Source = EPUAKYIW4820\\SQLEXPRESS; database = Gori; integrated security = True; MultipleActiveResultSets = True; App = EntityFramework;";
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseSqlServer(
+            //        connectionString,
+            //        options => options.EnableRetryOnFailure());
+            //}
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
