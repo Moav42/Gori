@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoriAPI.Interfaces;
+using GoriAPI.Services;
 
 namespace GoriAPI.Extensions
 {
@@ -26,6 +28,13 @@ namespace GoriAPI.Extensions
             services.AddScoped<IPositionIngredientsRepository<PositionIngredients>, PositionIngredientsRepository>();
             services.AddScoped<IPositionRepository<Position>, PositionRepository>();
             services.AddScoped<ISalesRepository<Sales>, SalesRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            services.AddScoped<ISalesManager, SalesManager>();
 
             return services;
         }

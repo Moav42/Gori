@@ -10,6 +10,6 @@ namespace DAL.Interfaces
         Task CreateSalesAsync(T item);
         Task<IEnumerable<T>> ReadAllSalesAsync();
         Task<T> ReadSalesAsync(int id);
-        Task MaleSalePaidAsync(int id);
+        Task<bool> MakeSalePaidAsync(int id);
     }
 }

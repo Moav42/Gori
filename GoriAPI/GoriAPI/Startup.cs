@@ -34,6 +34,7 @@ namespace GoriAPI
             services.AddDbContext<DAL.EF.Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRepositories();
+            services.AddServices();
 
             services.AddCors(options =>
             {

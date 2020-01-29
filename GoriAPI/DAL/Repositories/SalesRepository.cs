@@ -34,13 +34,22 @@ namespace DAL.Repositories
             return item;
         }
 
-        public async Task MaleSalePaidAsync(int id)
+        public async Task<bool> MakeSalePaidAsync(int id)
         {
             var item = await ReadSalesAsync(id);
             item.Paid = true;
 
             _context.Sales.Update(item);
-            await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
+
+            if(result != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }

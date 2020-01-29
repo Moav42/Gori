@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DAL.Entities;
 using DAL.Interfaces;
+using GoriAPI.Interfaces;
 using GoriAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +21,16 @@ namespace GoriAPI.Controllers
         private readonly IPositionRepository<Position> _positionRepo;
         private readonly IPositionIngredientsRepository<PositionIngredients> _ingredientsRepo;
         private readonly IDrinkRepository<Drink> _drinksRepo;
+        private readonly ISalesManager _salesManager;
 
-        public SalesController(ISalesRepository<Sales> repository, IMapper mapper, IPositionRepository<Position> positionRepo, IPositionIngredientsRepository<PositionIngredients> ingridientsRepo, IDrinkRepository<Drink> drinksRepo)
+        public SalesController(ISalesRepository<Sales> repository, IMapper mapper, IPositionRepository<Position> positionRepo, IPositionIngredientsRepository<PositionIngredients> ingridientsRepo, IDrinkRepository<Drink> drinksRepo, ISalesManager salesManager)
         {
             _salesRepo = repository;
             _mapper = mapper;
             _positionRepo = positionRepo;
             _ingredientsRepo = ingridientsRepo;
             _drinksRepo = drinksRepo;
+            _salesManager = salesManager;
         }
 
         [HttpGet]
@@ -58,54 +61,28 @@ namespace GoriAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            await ConfigureSale(model);
-            await UpdateDrinksActulalVolume(model);
+            await _salesManager.ConfigureSale(model);
+            await _salesManager.UpdateDrinksActulalVolume(model);
 
             await _salesRepo.CreateSalesAsync(_mapper.Map<Sales>(model));
 
             return CreatedAtAction(nameof(GetSale), new { id = model.Id }, model);
         }
 
-
-        private async Task ConfigureSale(SalesModel model)
+        [HttpPut("{id}/paid")]
+        public async Task<ActionResult> MakeSalePaid(int id)
         {
-            var currentPosition = await _positionRepo.ReadPositionAsync(model.PositionId);
+            var res = await _salesRepo.MakeSalePaidAsync(id);
 
-            if (model.IsByRawPrice)
+            if(res == true)
             {
-                model.TotalPrice = currentPosition.RawPrice * model.Quantity;
+                return Ok();
             }
             else
             {
-                model.TotalPrice = currentPosition.RetailPrice * model.Quantity;
-            }
-            model.TimeOfSale = DateTime.Now;
-        }
-
-        private async Task UpdateDrinksActulalVolume(SalesModel model)
-        {
-            var ingredients = await _ingredientsRepo.ReadAllPositionIngredientsAsync(model.PositionId);
-
-            var ingredientsList = ingredients.ToList();
-            var drinksList = new List<Drink>();
-
-            foreach (var ingredient in ingredients)
-            {
-                drinksList.Add(await _drinksRepo.ReadDrinkAsync(ingredient.DrinkId));
-            }
-
-            if(ingredientsList.Count == drinksList.Count)
-            {
-                for (int i = 0; i < drinksList.Count; i++)
-                {
-                    drinksList[i].ActualVolume -= (ingredientsList[i].Volume / 1000) * model.Quantity;
-                }
-            }
-
-            foreach (var drink in drinksList)
-            {
-                await _drinksRepo.UpdateDrinkAsync(drink);
+                return BadRequest();
             }
         }
+      
     }
 }
