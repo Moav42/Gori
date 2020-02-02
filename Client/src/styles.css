@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+.container{
+    padding: 15px 15px ;
+}
+.primary-text-color{
+    color: rgba(255, 255, 255, 0.9)
+}
+.secondary-text-color{
+    color: rgb(123, 128, 149)
+}
+.primary-color{
+    background-color: #ff9900;
+}
+.secondary-color{
+    background-color: #222222;
+}
+.third-color{
+    background-color:#dd7907;
+}
+tr, th{
+    color: #FFFFFF;
+}
+.btn{
+    color: rgba(255,255,255,.5)
+}
+.row-padding{
+    padding: 0px 15px 5px 15px;
+}
+.btn:hover, 
+.btn:active,
+.btn:visited,
+.btn:focus,
+.btn.hover, 
+.btn.active,
+.btn.visited,
+.btn.focus{
+    color:rgba(255,255,255) !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 136, 0, 0.5);
+}

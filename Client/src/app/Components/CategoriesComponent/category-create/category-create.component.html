@@ -1,0 +1,27 @@
+<div class = "row row-padding">
+  <button class="btn col-5 col-sm-4 primary-color " (click) = "back()"> Назад</button>
+</div>
+<form [formGroup]="categoryCreateForm" style="background-color: #222222;">   
+    <div class="form-group">
+      <label for="categoryName" class="primary-text-color">Название категории</label>
+      <input type="text" class="form-control" formControlName="categoryName" 
+      id="categoryName" placeholder="Введите название категории">
+    </div>
+    <div class="alert alert-danger"
+    *ngIf="categoryCreateForm.controls['categoryName'].invalid && categoryCreateForm.controls['categoryName'].touched">
+    Название не указано
+    </div>
+
+    <div class="form-group">
+      <label for="description" class = "primary-text-color">Описание категории</label>
+      <textarea type="" class="form-control" formControlName="description" 
+      id="description" placeholder="Введите описание"
+      rows="15"></textarea>
+    </div>
+    <div class="alert alert-danger"
+    *ngIf="categoryCreateForm.controls['description'].invalid && categoryCreateForm.controls['description'].touched">
+    Описание не указано
+    </div>
+
+    <button class="btn col-6 col-sm-4 primary-color" [disabled]="categoryCreateForm.invalid" (click)="createDrinkCategory()">Создать</button>
+</form>

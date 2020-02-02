@@ -1,0 +1,29 @@
+<div class = "row row-padding">
+    <button class="btn col-5 col-sm-4 primary-color " (click) = "back()"> Назад</button>
+</div>
+<form [formGroup]="categoryUpdateForm" >
+    <div class="form-group" style="background-color: #222222;">
+      <label for="categoryName" class="primary-text-color">Название категории</label>
+      <input type="text" class="form-control" formControlName="categoryName" 
+      id="categoryName" placeholder="Введите название категории">
+    </div>
+    <div class="alert alert-danger"
+    *ngIf="categoryUpdateForm.controls['categoryName'].invalid && categoryUpdateForm.controls['categoryName'].touched">
+    Название не указано
+    </div>
+
+    <div class="form-group" style="background-color: #222222;">
+      <label for="description" class = "primary-text-color">Описание категории</label>
+      <textarea type="" class="form-control" formControlName="description" 
+      id="description" placeholder="Введите описание"
+      rows="15"></textarea>
+    </div>
+    <div class="alert alert-danger"
+    *ngIf="categoryUpdateForm.controls['description'].invalid && categoryUpdateForm.controls['description'].touched">
+    Описание не указано
+    </div>
+</form>
+<div class = "row row-padding" style="background-color: #222222;">
+  <button class="btn col-5 col-sm-4 primary-color " (click) = "saveCategory()"> Сохранить</button>
+  <button class="btn col-5 col-sm-4 primary-color ml-auto " (click) = "deleteCategory()"> -Удалить</button>
+</div>

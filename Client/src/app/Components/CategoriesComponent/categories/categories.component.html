@@ -1,0 +1,35 @@
+<div class = "row custom-padding" style="background-color: #222222;">
+    <button class="btn col-6 col-sm-4 primary-color " (click) = "navigateToCreate()"> + Новая категория</button>
+</div>
+<div class = " table-responsive" *ngIf = "categories.length>0" style="background-color: #222222;">
+    <table class="table" style="background-color: #222222;">
+        <thead style="background-color: #222222;"> style="background-color: #222222;"
+            <tr>
+                <th>
+                    №
+                </th>
+                <th>
+                    Название
+                </th>
+                <th>
+                    Описание
+                </th>                
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor = "let category of categories" (click)="navigateToEdit(category.id)">
+                <th> 
+                    {{category.id}}
+                </th>
+                <td>
+                    {{category.title}}
+                </td>
+                <td>
+                    {{category.description}}
+                </td>
+            </tr>
+        </tbody>
+        
+    </table>
+</div>
